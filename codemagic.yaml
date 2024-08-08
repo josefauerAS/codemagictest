@@ -1,0 +1,18 @@
+workflows:
+  default-workflow:
+    name: Default
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      flutter: stable
+    scripts:
+      - name: Get packages
+        script: |
+          flutter pub get
+      - name: Run test
+        script: |
+          flutter test
+      - name: Run integration test
+        script: |
+          chromedriver --port=4444 &
+          flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart -d chrome
